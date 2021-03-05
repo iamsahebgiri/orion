@@ -1,0 +1,8 @@
+build
+coverage
+# parcel-bundler cache (https://parceljs.org/)
+.cache
+
+# Next.js build output
+.next
+node_modules/
