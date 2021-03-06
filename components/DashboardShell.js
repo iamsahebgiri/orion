@@ -22,9 +22,7 @@ const DashboardShell = (props) => {
   const auth = useAuth();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
-  // getVaultByUserId()
-  // console.log()
-
+  
   return (
     <Box>
       <Flex position="fixed" zIndex={1}>
@@ -89,8 +87,8 @@ const DashboardShell = (props) => {
 
         <AllVaults />
       </Flex>
-      <Flex ml="424px" justifyContent="center">
-        <VaultDetails />
+      <Flex ml="424px">
+        {props.children}
       </Flex>
 
       {/* Add Item Drawer */}

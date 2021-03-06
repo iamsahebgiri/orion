@@ -3,8 +3,11 @@ import { Global, css } from '@emotion/react';
 import Head from 'next/head';
 
 import customTheme from '@/styles/theme';
-import  '@/styles/scroll.css';
+import '@/styles/scroll.css';
 import { AuthProvider } from '@/lib/auth';
+
+import { StoreProvider } from "easy-peasy";
+import store from '@/store/store';
 
 const GlobalStyle = ({ children }) => {
   return (
@@ -33,10 +36,12 @@ const GlobalStyle = ({ children }) => {
 const App = ({ Component, pageProps }) => {
   return (
     <ChakraProvider theme={customTheme}>
-      <AuthProvider>
-        <GlobalStyle />
-        <Component {...pageProps} />
-      </AuthProvider>
+      <StoreProvider store={store}>
+        <AuthProvider>
+          <GlobalStyle />
+          <Component {...pageProps} />
+        </AuthProvider>
+      </StoreProvider>
     </ChakraProvider>
   );
 };

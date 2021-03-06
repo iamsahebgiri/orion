@@ -24,10 +24,12 @@ import {
 import { useForm } from 'react-hook-form';
 import { useAuth } from '@/lib/auth';
 import { createVault } from '@/lib/db';
+import { action, useStoreActions } from 'easy-peasy';
 
 const AddItemDrawer = ({ isOpen, onClose }) => {
   const { user, loading } = useAuth();
-  const { register, handleSubmit, watch, errors, formState } = useForm();
+  const { register, handleSubmit, errors, formState } = useForm();
+  const addVault = useStoreActions((action) => action.addVault);
   const onSubmit = (data) => {
     const vault = {
       ...data,
@@ -36,17 +38,10 @@ const AddItemDrawer = ({ isOpen, onClose }) => {
       createdAt: new Date().toISOString()
     };
     return new Promise((resolve) => {
-      createVault(vault)
-        .then(() => {
-          console.log('Document successfully added!');
-          resolve();
-          onClose();
-        })
-        .catch((error) => {
-          console.error('Error creating document: ', error);
-          resolve();
-          onClose();
-        });
+      const vid = createVault(vault);
+      addVault({ vid, ...data });
+      resolve();
+      onClose();
     });
   };
 
@@ -56,9 +51,7 @@ const AddItemDrawer = ({ isOpen, onClose }) => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <DrawerContent>
             <DrawerCloseButton />
-            <DrawerHeader borderBottomWidth="1px">
-              Add a new account
-            </DrawerHeader>
+            <DrawerHeader borderBottomWidth="1px">Add a new vault</DrawerHeader>
             <DrawerBody>
               <Stack spacing="24px">
                 <Box>

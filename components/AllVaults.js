@@ -11,34 +11,22 @@ import { HiOutlineSearch } from 'react-icons/hi';
 import Vault from '@/components/Vault';
 import { useAuth } from '@/lib/auth';
 import { useEffect, useState } from 'react';
-import { getVaultByUserId } from '@/lib/db';
+import { useStoreActions, useStoreState } from 'easy-peasy';
 
 const AllVaults = () => {
   const { user } = useAuth();
-  const [vaults, setVaults] = useState(null);
-  const [vaultsCopy, setVaultsCopy] = useState(null);
-  const [loading, setLoading] = useState(true);
+
+  const vaults = useStoreState((state) => state.vaults);
+  const vaultsCopy = useStoreState((state) => state.vaultsCopy);
+  const loadingVault = useStoreState((state) => state.loadingVault);
+  const getAllVaults = useStoreActions((actions) => actions.getAllVaults);
+  const setVault = useStoreActions((actions) => actions.setVault);
 
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     if (user !== null) {
-      getVaultByUserId(user?.uid)
-        .then((querySnapshot) => {
-          let data = [];
-          querySnapshot.forEach((doc) => {
-            data.push(doc.data());
-            // console.log(doc.id, ' -> ', doc.data());
-          });
-          setVaultsCopy(data);
-          setVaults(data);
-          setLoading(false);
-          console.log(vaults);
-        })
-        .catch((error) => {
-          console.log('Error getting documents: ', error);
-          setLoading(false);
-        });
+      getAllVaults(user?.uid);
     }
   }, [user]);
 
@@ -47,8 +35,7 @@ const AllVaults = () => {
     const result = vaultsCopy.filter((vault) =>
       vault.url.match(e.target.value)
     );
-    setVaults(result);
-    console.log(result);
+    setVault(result);
   };
 
   return (
@@ -80,14 +67,15 @@ const AllVaults = () => {
         </InputGroup>
       </Flex>
       <Stack>
-        {loading ? (
+        {loadingVault ? (
           <Spinner color="messenger.500" />
         ) : (
           vaults.map((vault) => (
             <Vault
-              key={vault.createdAt}
+              key={vault.vid}
               url={vault.url}
               username={vault.username}
+              vid={vault.vid}
             />
           ))
         )}

@@ -50,7 +50,7 @@ const Home = () => {
           <Button
             colorScheme="messenger"
             isLoading={auth.loading.google}
-            onClick={() => auth.signinWithGoogle('/dashboard')}
+            onClick={() => auth.signinWithGoogle('/vaults')}
             my={6}
           >
             Continue with Google

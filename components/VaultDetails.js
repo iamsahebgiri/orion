@@ -20,7 +20,7 @@ const VaultDetails = () => {
   const onCloseDialog = () => setIsOpenDialog(false);
   return (
     <>
-      <Flex width="100%" px={12} py={4} direction="column">
+      <Flex width="100%" minH="100vh" px={12} py={4} direction="column">
         <Flex
           alignItems="center"
           width="100%"
@@ -55,6 +55,7 @@ const VaultDetails = () => {
             </Button>
           </Box>
         </Flex>
+
         <Stack py={6}>
           <Box>
             <Text fontWeight="bold">Username</Text>
@@ -69,7 +70,9 @@ const VaultDetails = () => {
             <Text>iamsahebgiri.now.sh</Text>
           </Box>
         </Stack>
+
         <Divider />
+
         <Box>
           <Text fontWeight="bold">Note</Text>
           <Text>
