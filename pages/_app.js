@@ -3,6 +3,7 @@ import { Global, css } from '@emotion/react';
 import Head from 'next/head';
 
 import customTheme from '@/styles/theme';
+import  '@/styles/scroll.css';
 import { AuthProvider } from '@/lib/auth';
 
 const GlobalStyle = ({ children }) => {

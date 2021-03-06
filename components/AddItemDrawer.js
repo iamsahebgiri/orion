@@ -8,6 +8,8 @@ import {
   DrawerCloseButton,
   useDisclosure,
   FormLabel,
+  FormControl,
+  FormErrorMessage,
   InputLeftAddon,
   InputRightAddon,
   Select,
@@ -17,76 +19,122 @@ import {
   Box,
   Input,
   InputGroup,
-  Button,
-
+  Button
 } from '@chakra-ui/react';
+import { useForm } from 'react-hook-form';
 import { useAuth } from '@/lib/auth';
+import { createVault } from '@/lib/db';
 
 const AddItemDrawer = ({ isOpen, onClose }) => {
-    const { user, loading } = useAuth();
+  const { user, loading } = useAuth();
+  const { register, handleSubmit, watch, errors, formState } = useForm();
+  const onSubmit = (data) => {
+    const vault = {
+      ...data,
+      user: user.name,
+      userId: user.uid,
+      createdAt: new Date().toISOString()
+    };
+    return new Promise((resolve) => {
+      createVault(vault)
+        .then(() => {
+          console.log('Document successfully added!');
+          resolve();
+          onClose();
+        })
+        .catch((error) => {
+          console.error('Error creating document: ', error);
+          resolve();
+          onClose();
+        });
+    });
+  };
+
   return (
     <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
       <DrawerOverlay>
-        <DrawerContent>
-          <DrawerCloseButton />
-          <DrawerHeader borderBottomWidth="1px">Add a new account</DrawerHeader>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <DrawerContent>
+            <DrawerCloseButton />
+            <DrawerHeader borderBottomWidth="1px">
+              Add a new account
+            </DrawerHeader>
+            <DrawerBody>
+              <Stack spacing="24px">
+                <Box>
+                  <FormControl isInvalid={errors.username} isRequired>
+                    <FormLabel htmlFor="username">Username</FormLabel>
+                    <Input
+                      name="username"
+                      placeholder="Eg. iamsahebgiri"
+                      ref={register({ required: true })}
+                    />
+                    <FormErrorMessage>
+                      {errors.username && errors.username.message}
+                    </FormErrorMessage>
+                  </FormControl>
+                </Box>
 
-          <DrawerBody>
-            <Stack spacing="24px">
-              <Box>
-                <FormLabel htmlFor="username">Username</FormLabel>
-                <Input id="username" placeholder="Please enter user name" />
-              </Box>
+                <Box>
+                  <FormControl isInvalid={errors.password} isRequired>
+                    <FormLabel htmlFor="password">Password</FormLabel>
+                    <Input
+                      name="password"
+                      placeholder="Eg. pass123"
+                      type="password"
+                      ref={register({ required: true })}
+                    />
+                    <FormErrorMessage>
+                      {errors.password && errors.password.message}
+                    </FormErrorMessage>
+                  </FormControl>
+                </Box>
 
-              <Box>
-                <FormLabel htmlFor="password">Password</FormLabel>
-                <Input
-                  id="password"
-                  placeholder="Please enter password"
-                  type="password"
-                />
-              </Box>
+                <Box>
+                  <FormControl isInvalid={errors.url} isRequired>
+                    <FormLabel htmlFor="url">Website</FormLabel>
+                    <InputGroup>
+                      <InputLeftAddon>https://</InputLeftAddon>
+                      <Input
+                        id="url"
+                        name="url"
+                        placeholder="domain"
+                        ref={register({ required: true })}
+                      />
+                      <InputRightAddon>.com</InputRightAddon>
+                    </InputGroup>
 
-              <Box>
-                <FormLabel htmlFor="url">Website</FormLabel>
-                <InputGroup>
-                  <InputLeftAddon>http://</InputLeftAddon>
-                  <Input
-                    type="url"
-                    id="url"
-                    placeholder="Please enter domain"
+                    <FormErrorMessage>
+                      {errors.url && errors.url.message}
+                    </FormErrorMessage>
+                  </FormControl>
+                </Box>
+
+                <Box>
+                  <FormLabel htmlFor="note">Note</FormLabel>
+                  <Textarea
+                    ref={register}
+                    name="note"
+                    placeholder="Anything sweet.."
                   />
-                  <InputRightAddon>.com</InputRightAddon>
-                </InputGroup>
-              </Box>
+                </Box>
+              </Stack>
+            </DrawerBody>
 
-              <Box>
-                <FormLabel htmlFor="desc">Note</FormLabel>
-                <Textarea id="desc" />
-              </Box>
-            </Stack>
-          </DrawerBody>
-
-          <DrawerFooter borderTopWidth="1px">
-            <Button mr={3} onClick={onClose}>
-              Cancel
-            </Button>
-            <Button
-              colorScheme="messenger"
-              onClick={() => {
-                const newVault = {
-                  user: user.name,
-                  userId: user.uid,
-
-                  createdAt: new Date().toISOString()
-                };
-                console.log('newVault', newVault);
-              }}
-            >
-              Save
-            </Button>
-          </DrawerFooter>
-        </DrawerContent>
+            <DrawerFooter borderTopWidth="1px">
+              <Button mr={3} onClick={onClose}>
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                colorScheme="messenger"
+                isLoading={formState.isSubmitting}
+              >
+                Save
+              </Button>
+            </DrawerFooter>
+          </DrawerContent>
+        </form>
       </DrawerOverlay>
     </Drawer>
   );
