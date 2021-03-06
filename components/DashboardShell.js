@@ -1,42 +1,32 @@
-import { LincTreeFavIcon } from '@/components/LincTree';
-import NavItem from '@/components/NavItem';
-import { useState } from 'react';
 import { useAuth } from '@/lib/auth';
 import {
-  Box,
-  Flex,
-  Menu,
-  MenuButton,
-  MenuGroup,
-  MenuItem,
-  MenuList,
-  Portal,
-  Divider,
-  FormControl,
-  FormLabel,
-  FormErrorMessage,
-  FormHelperText,
   AlertDialog,
   AlertDialogBody,
+  AlertDialogContent,
   AlertDialogFooter,
   AlertDialogHeader,
-  AlertDialogContent,
   AlertDialogOverlay,
-  InputGroup,
-  InputRightElement,
-  InputLeftElement,
+  Box,
+  Button,
+  Divider,
+  Flex,
+  Icon,
   Input,
+  InputGroup,
+  InputLeftElement,
   Stack,
   Text,
-  Button,
-  Icon
+  Tooltip,
+  useDisclosure,
 } from '@chakra-ui/react';
-
+import React, { useState } from 'react';
 import {
   HiOutlinePencil,
+  HiOutlineSearch,
   HiOutlineTrash,
-  HiOutlineSearch
+  HiOutlinePlus
 } from 'react-icons/hi';
+import AddItemDrawer from './AddItemDrawer';
 
 const Vault = (props) => {
   return (
@@ -73,10 +63,10 @@ const Vault = (props) => {
 };
 
 const DashboardShell = (props) => {
-  const auth = useAuth();
-  const [isOpen, setIsOpen] = useState(false)
-  const onClose = () => setIsOpen(false)
-  
+  const { user, loading } = useAuth();
+  const [isOpenDialog, setIsOpenDialog] = useState(false);
+  const onCloseDialog = () => setIsOpenDialog(false);
+  const { isOpen, onOpen, onClose} = useDisclosure();
 
   const navs = [
     {
@@ -104,9 +94,26 @@ const DashboardShell = (props) => {
           justifyContent="space-between"
         >
           <Box>
-            <Box height="64px" width="64px"></Box>
-            <Box height="64px" width="64px"></Box>
-            <Box height="64px" width="64px"></Box>
+            <Box height="64px" width="64px">
+              <img
+                src="/assets/orion-dashboard.png"
+                height="64px"
+                width="64px"
+              />
+            </Box>
+            <Tooltip hasArrow label="Add Item" aria-label="Add Item" placement="right">
+              <Flex
+                alignItems="center"
+                justifyContent="center"
+                height="64px"
+                width="64px"
+                onClick={onOpen}
+                _hover={{ cursor: 'pointer' }}
+              >
+               <Icon as={HiOutlinePlus} h={8} w={8} color="gray.300" />
+              </Flex>
+            </Tooltip>
+            {/* <Button onClick={onOpen}>A</Button> */}
           </Box>
           <img
             style={{
@@ -114,8 +121,8 @@ const DashboardShell = (props) => {
             }}
             height="40px"
             width="40px"
-            src={auth?.user?.photoUrl}
-            alt={auth?.user?.name}
+            src={user?.photoUrl}
+            alt={user?.name}
           />
         </Flex>
         <Flex
@@ -134,7 +141,12 @@ const DashboardShell = (props) => {
                   <Icon size="21px" as={HiOutlineSearch} color="gray.400" />
                 }
               />
-              <Input bg="white" width="320px" placeholder="Search password" />
+              <Input
+                bg="white"
+                width="320px"
+                placeholder="Search password"
+                focusBorderColor="messenger.500"
+              />
             </InputGroup>
           </Flex>
           <Stack>
@@ -150,9 +162,8 @@ const DashboardShell = (props) => {
           <Flex
             alignItems="center"
             width="100%"
-            borderBottom="1px"
+            borderBottomWidth="1px"
             py={4}
-            borderBottomColor="gray.100"
             justifyContent="space-between"
           >
             <Flex alignItems="center">
@@ -172,7 +183,12 @@ const DashboardShell = (props) => {
             </Flex>
             <Box>
               <Button leftIcon={<HiOutlinePencil />}>Edit</Button>
-              <Button leftIcon={<HiOutlineTrash />} ml={5} colorScheme="red" onClick={() => setIsOpen(true)}>
+              <Button
+                leftIcon={<HiOutlineTrash />}
+                ml={5}
+                colorScheme="red"
+                onClick={() => setIsOpenDialog(true)}
+              >
                 Delete
               </Button>
             </Box>
@@ -190,19 +206,20 @@ const DashboardShell = (props) => {
               <Text fontWeight="bold">Website</Text>
               <Text>iamsahebgiri.now.sh</Text>
             </Box>
-           
           </Stack>
           <Divider />
           <Box>
             <Text fontWeight="bold">Note</Text>
-            <Text>The BIOS in modern PCs initializes and tests the system hardware components, and loads a boot loader from a mass storage device which then initializes an operating system.</Text>
+            <Text>
+              The BIOS in modern PCs initializes and tests the system hardware
+              components, and loads a boot loader from a mass storage device
+              which then initializes an operating system.
+            </Text>
           </Box>
         </Flex>
       </Flex>
-      <AlertDialog
-        isOpen={isOpen}
-        onClose={onClose}
-      >
+      {/* Delete Password Dialog */}
+      <AlertDialog isOpen={isOpenDialog} onClose={onCloseDialog} isCentered>
         <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogHeader fontSize="lg" fontWeight="bold">
@@ -210,20 +227,21 @@ const DashboardShell = (props) => {
             </AlertDialogHeader>
 
             <AlertDialogBody>
-              Are you sure? You can't undo this action afterwards.
+              Are you sure you want to delete password?
             </AlertDialogBody>
 
             <AlertDialogFooter>
-              <Button onClick={onClose}>
-                Cancel
-              </Button>
-              <Button colorScheme="red" onClick={onClose} ml={3}>
+              <Button onClick={onCloseDialog}>Cancel</Button>
+              <Button colorScheme="red" onClick={onCloseDialog} ml={3}>
                 Delete
               </Button>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialogOverlay>
       </AlertDialog>
+
+      {/* Add Item Drawer */}
+      <AddItemDrawer isOpen={isOpen} onClose={onClose} />
     </Box>
   );
 };
