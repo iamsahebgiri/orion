@@ -1,6 +1,6 @@
 {
-  "name": "linctree",
-  "description": "The only link you’ll ever need. Connect audiences to all of your content with just one link.",
+  "name": "orion",
+  "description": "Never forget your password again.",
   "version": "1.0.0",
   "scripts": {
     "dev": "next dev",

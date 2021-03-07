@@ -15,7 +15,8 @@ import {
 import React, { useState } from 'react';
 import { HiOutlinePencil, HiOutlineTrash } from 'react-icons/hi';
 
-const VaultDetails = () => {
+const VaultDetails = ({ vault }) => {
+  const { note, password, url, username } = vault;
   const [isOpenDialog, setIsOpenDialog] = useState(false);
   const onCloseDialog = () => setIsOpenDialog(false);
   return (
@@ -31,15 +32,15 @@ const VaultDetails = () => {
           <Flex alignItems="center">
             <Box>
               <img
-                src="https://favicons.githubusercontent.com/google.com"
-                alt="Picture of the author"
+                src={`https://favicons.githubusercontent.com/${url}.com`}
+                alt={url}
                 width="32"
                 height="32"
               />
             </Box>
             <Box ml={2}>
               <Text fontWeight="semibold" fontSize="2xl" color="gray.700">
-                Google
+                {url[0].toUpperCase() + url.substr(1)}
               </Text>
             </Box>
           </Flex>
@@ -59,15 +60,15 @@ const VaultDetails = () => {
         <Stack py={6}>
           <Box>
             <Text fontWeight="bold">Username</Text>
-            <Text>iamsahebgiri</Text>
+            <Text>{username}</Text>
           </Box>
           <Box>
             <Text fontWeight="bold">Password</Text>
-            <Text>iamsahebgiri</Text>
+            <Text>{password}</Text>
           </Box>
           <Box>
             <Text fontWeight="bold">Website</Text>
-            <Text>iamsahebgiri.now.sh</Text>
+            <Text>https://{url}.com</Text>
           </Box>
         </Stack>
 
@@ -75,11 +76,7 @@ const VaultDetails = () => {
 
         <Box>
           <Text fontWeight="bold">Note</Text>
-          <Text>
-            The BIOS in modern PCs initializes and tests the system hardware
-            components, and loads a boot loader from a mass storage device which
-            then initializes an operating system.
-          </Text>
+          <Text>{note}</Text>
         </Box>
       </Flex>
       {/* Delete Password Dialog */}

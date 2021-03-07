@@ -16,7 +16,6 @@ import React from 'react';
 import { HiOutlinePlus } from 'react-icons/hi';
 import AddItemDrawer from './AddItemDrawer';
 import AllVaults from './AllVaults';
-import VaultDetails from './VaultDetails';
 
 const DashboardShell = (props) => {
   const auth = useAuth();

@@ -20,7 +20,7 @@ const Vault = ({ url = 'url', username = 'username', vid = '1' }) => {
           <Box>
             <img
               src={`https://favicons.githubusercontent.com/${url}.com`}
-              alt="Picture of the author"
+              alt={url}
               width="32"
               height="32"
             />

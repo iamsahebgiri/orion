@@ -24,7 +24,7 @@ import {
 import { useForm } from 'react-hook-form';
 import { useAuth } from '@/lib/auth';
 import { createVault } from '@/lib/db';
-import { action, useStoreActions } from 'easy-peasy';
+import { useStoreActions } from 'easy-peasy';
 
 const AddItemDrawer = ({ isOpen, onClose }) => {
   const { user, loading } = useAuth();

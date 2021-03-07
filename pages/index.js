@@ -10,7 +10,6 @@ import {
   Stack,
   Text
 } from '@chakra-ui/react';
-import LincTreeIcon from '@/components/LincTree';
 import Container from '@/components/Container';
 import { useAuth } from '@/lib/auth';
 

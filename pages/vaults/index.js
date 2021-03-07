@@ -22,9 +22,6 @@ const Vaults = () => {
           <Text color="gray.500" mt={2} textAlign="center">There are no vaults created yet.</Text>
         </Flex>
       </Flex>
-      {/* <Flex justifyContent="center">
-        <VaultDetails />
-      </Flex> */}
     </DashboardShell>
   );
 };
