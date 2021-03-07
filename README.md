@@ -9,6 +9,12 @@
 <br>
 
 Orion puts your digital life at your fingertips, simply and securely.
+
+## Tech Stack
+  * NextJS (Meta framework based on react)
+  * Firebase (Storing data)
+  * Chakra UI (UI Component Library)
+  * Easy-Peasy (State Management based on Reux under the hood)
 ## TODO
 * [x] Create Vaults
 * [x] Search Vaults
