@@ -34,4 +34,4 @@ Orion puts your digital life at your fingertips, simply and securely.
 
 ## Screenshot
 
-<img src="https://raw.githubusercontent.com/iamsahebgiri/orion/main/public/assets/screenshot.png" alt="Orion Screenshot" />
+<img src="https://raw.githubusercontent.com/iamsahebgiri/orion/main/public/assets/orion-screenshot.jpg" alt="Orion Screenshot" />
