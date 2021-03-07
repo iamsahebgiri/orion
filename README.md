@@ -31,3 +31,7 @@ Orion puts your digital life at your fingertips, simply and securely.
 
 ## Nice to have features
 * [ ] Password Generator
+
+## Screenshot
+
+<img src="https://raw.githubusercontent.com/iamsahebgiri/orion/main/public/assets/screenshot.png" alt="Orion Screenshot" />
