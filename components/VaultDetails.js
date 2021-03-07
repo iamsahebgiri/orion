@@ -30,15 +30,15 @@ import {
 } from 'react-icons/hi';
 
 const InfoItem = ({ content, icon }) => {
-  const [value, setValue] = useState(content);
-  const { hasCopied, onCopy } = useClipboard(value);
+  const { hasCopied, onCopy } = useClipboard(content);
   const toast = useToast();
+
 
   useEffect(() => {
     if (hasCopied) {
       toast({
         title: 'Copied successfully.',
-        description: `${value} copied to your clipboard`,
+        description: `${content} copied to your clipboard`,
         status: 'success',
         duration: 2000,
         isClosable: true

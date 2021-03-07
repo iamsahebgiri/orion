@@ -25,4 +25,4 @@ Orion puts your digital life at your fingertips, simply and securely.
 ## Bugs
 
 * [x] Show newly added item to the vaults list
-* [ ] Clipboard state don't change on navigation
+* [x] Clipboard state don't change on navigation
