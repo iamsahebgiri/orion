@@ -109,7 +109,7 @@ const VaultDetails = ({ vault }) => {
           </Box>
         </Flex>
 
-        <Flex bg="messenger.50" my={8} p={4} rounded="md" alignItems="center">
+        <Flex bg="messenger.50" mt={8} p={4} rounded="md" alignItems="center">
           <Icon
             as={HiInformationCircle}
             h={5}
@@ -121,7 +121,7 @@ const VaultDetails = ({ vault }) => {
             Click on the item to copy it to clipboard.
           </Text>
         </Flex>
-        <SimpleGrid columns={[1, 1, 2]} spacing="40px">
+        <SimpleGrid mt={8} columns={[1, 1, 2]} spacing="40px">
           <Stack p={8} spacing={5} bg="gray.100" rounded="md">
             <Text fontWeight="bold" color="gray.800">
               Vault information
