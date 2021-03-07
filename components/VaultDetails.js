@@ -8,12 +8,61 @@ import {
   Box,
   Button,
   Divider,
+  Input,
   Flex,
   Stack,
-  Text
+  SimpleGrid,
+  Text,
+  Icon,
+  Tooltip,
+  useClipboard,
+  useToast
 } from '@chakra-ui/react';
-import React, { useState } from 'react';
-import { HiOutlinePencil, HiOutlineTrash } from 'react-icons/hi';
+import React, { useState, useEffect } from 'react';
+import {
+  HiOutlinePencil,
+  HiOutlineTrash,
+  HiOutlineInformationCircle,
+  HiInformationCircle,
+  HiUserCircle,
+  HiKey,
+  HiGlobeAlt
+} from 'react-icons/hi';
+
+const InfoItem = ({ content, icon }) => {
+  const [value, setValue] = useState(content);
+  const { hasCopied, onCopy } = useClipboard(value);
+  const toast = useToast();
+
+  useEffect(() => {
+    if (hasCopied) {
+      toast({
+        title: 'Copied successfully.',
+        description: `${value} copied to your clipboard`,
+        status: 'success',
+        duration: 2000,
+        isClosable: true
+      });
+    }
+  }, [hasCopied]);
+
+  return (
+    <Box>
+      <Flex alignItems="center">
+        <Icon as={icon} mr={2} h={5} w={5} color="gray.600" />
+        <Tooltip label="Copy to clipboard" hasArrow>
+          <Text
+            color="gray.700"
+            _hover={{ color: 'gray.700', cursor: 'pointer' }}
+            onClick={onCopy}
+          >
+            {content}
+          </Text>
+        </Tooltip>
+      </Flex>
+    </Box>
+  );
+};
 
 const VaultDetails = ({ vault }) => {
   const { note, password, url, username } = vault;
@@ -57,27 +106,35 @@ const VaultDetails = ({ vault }) => {
           </Box>
         </Flex>
 
-        <Stack py={6}>
-          <Box>
-            <Text fontWeight="bold">Username</Text>
-            <Text>{username}</Text>
+        <Flex bg="messenger.50" my={8} p={4} rounded="md" alignItems="center">
+          <Icon
+            as={HiInformationCircle}
+            h={5}
+            w={5}
+            mr={2}
+            color="messenger.600"
+          />
+          <Text color="messenger.600">
+            Click on the item to copy it to clipboard.
+          </Text>
+        </Flex>
+        <SimpleGrid columns={[1, 1, 2]} spacing="40px">
+          <Stack p={8} spacing={5} bg="gray.100" rounded="md">
+            <InfoItem label="Username" content={username} icon={HiUserCircle} />
+            <InfoItem label="Password" content={password} icon={HiKey} />
+            <InfoItem
+              label="Website"
+              content={`https://${url}.com`}
+              icon={HiGlobeAlt}
+            />
+          </Stack>
+          <Box p={8} bg="gray.100" rounded="md">
+            <Text fontWeight="bold" color="gray.800">
+              Note
+            </Text>
+            <Text color="gray.600">{note}</Text>
           </Box>
-          <Box>
-            <Text fontWeight="bold">Password</Text>
-            <Text>{password}</Text>
-          </Box>
-          <Box>
-            <Text fontWeight="bold">Website</Text>
-            <Text>https://{url}.com</Text>
-          </Box>
-        </Stack>
-
-        <Divider />
-
-        <Box>
-          <Text fontWeight="bold">Note</Text>
-          <Text>{note}</Text>
-        </Box>
+        </SimpleGrid>
       </Flex>
       {/* Delete Password Dialog */}
       <AlertDialog isOpen={isOpenDialog} onClose={onCloseDialog} isCentered>

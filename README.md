@@ -1,6 +1,6 @@
 <p align="center">
-  <a href="https://github.com/chakra-ui/chakra-ui">
-    <img src="https://raw.githubusercontent.com/chakra-ui/chakra-ui/main/logo/logo-colored@2x.png?raw=true" alt="Chakra logo" width="300" />
+  <a href="https://github.com/iamsahebgiri/orion">
+    <img src="https://raw.githubusercontent.com/iamsahebgiri/orion/main/public/assets/orion-sm.png" alt="Orion logo" width="100" />
   </a>
 </p>
 
@@ -18,9 +18,11 @@ Orion puts your digital life at your fingertips, simply and securely.
 * [x] Add global state management - easy-peasy
 * [ ] Encrypt Password and other sensitive informations
 * [ ] Add toast on successful events
+* [ ] Copy text to clipboard
 * [ ] Design landing page
 * [ ] Add Team info and other info
 
 ## Bugs
 
 * [x] Show newly added item to the vaults list
+* [ ] Clipboard state don't change on navigation

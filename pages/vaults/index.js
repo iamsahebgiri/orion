@@ -19,7 +19,7 @@ const Vaults = () => {
             <Icon as={HiFingerPrint} h={8} w={8} color="gray.500" />
           </Flex>
           <Heading size="lg" mt={4} color="gray.800" textAlign="center">No Vaults</Heading>
-          <Text color="gray.500" mt={2} textAlign="center">There are no vaults created yet.</Text>
+          <Text color="gray.500" mt={2} textAlign="center">There are no vaults created or selected yet.</Text>
         </Flex>
       </Flex>
     </DashboardShell>
