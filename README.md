@@ -14,11 +14,11 @@ Orion puts your digital life at your fingertips, simply and securely.
 * [x] Search Vaults
 * [x] View Vaults
 * [ ] Edit Vaults
-* [ ] Delete Vaults
+* [x] Delete Vaults
 * [x] Add global state management - easy-peasy
 * [ ] Encrypt Password and other sensitive informations
 * [ ] Add toast on successful events
-* [ ] Copy text to clipboard
+* [x] Copy text to clipboard
 * [ ] Design landing page
 * [ ] Add Team info and other info
 

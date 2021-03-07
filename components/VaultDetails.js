@@ -1,3 +1,4 @@
+import { deleteVaultById } from '@/lib/db';
 import {
   AlertDialog,
   AlertDialogBody,
@@ -7,37 +8,34 @@ import {
   AlertDialogOverlay,
   Box,
   Button,
-  Divider,
-  Input,
   Flex,
-  Stack,
-  SimpleGrid,
-  Text,
   Icon,
+  SimpleGrid,
+  Stack,
+  Text,
   Tooltip,
   useClipboard,
   useToast
 } from '@chakra-ui/react';
-import React, { useState, useEffect } from 'react';
+import { useStoreActions } from 'easy-peasy';
+import React, { useEffect, useState } from 'react';
 import {
+  HiGlobeAlt,
+  HiInformationCircle,
+  HiKey,
   HiOutlinePencil,
   HiOutlineTrash,
-  HiOutlineInformationCircle,
-  HiInformationCircle,
-  HiUserCircle,
-  HiKey,
-  HiGlobeAlt
+  HiUserCircle
 } from 'react-icons/hi';
 
 const InfoItem = ({ content, icon }) => {
   const { hasCopied, onCopy } = useClipboard(content);
   const toast = useToast();
 
-
   useEffect(() => {
     if (hasCopied) {
       toast({
-        title: 'Copied successfully.',
+        title: 'Successfully copied!',
         description: `${content} copied to your clipboard`,
         status: 'success',
         duration: 2000,
@@ -65,9 +63,14 @@ const InfoItem = ({ content, icon }) => {
 };
 
 const VaultDetails = ({ vault }) => {
-  const { note, password, url, username } = vault;
+  const { note, password, url, username, vid } = vault;
   const [isOpenDialog, setIsOpenDialog] = useState(false);
   const onCloseDialog = () => setIsOpenDialog(false);
+
+  const deleteVault = useStoreActions((action) => action.deleteVault);
+
+  const toast = useToast();
+
   return (
     <>
       <Flex width="100%" minH="100vh" px={12} py={4} direction="column">
@@ -120,6 +123,9 @@ const VaultDetails = ({ vault }) => {
         </Flex>
         <SimpleGrid columns={[1, 1, 2]} spacing="40px">
           <Stack p={8} spacing={5} bg="gray.100" rounded="md">
+            <Text fontWeight="bold" color="gray.800">
+              Vault information
+            </Text>
             <InfoItem label="Username" content={username} icon={HiUserCircle} />
             <InfoItem label="Password" content={password} icon={HiKey} />
             <InfoItem
@@ -150,7 +156,27 @@ const VaultDetails = ({ vault }) => {
 
             <AlertDialogFooter>
               <Button onClick={onCloseDialog}>Cancel</Button>
-              <Button colorScheme="red" onClick={onCloseDialog} ml={3}>
+              <Button
+                colorScheme="red"
+                onClick={() => {
+                  deleteVaultById(vid)
+                    .then(() => {
+                      deleteVault(vid);
+                      toast({
+                        title: 'Vault successfully deleted!',
+                        status: 'success',
+                        duration: 2000
+                      });
+                      console.log('Document successfully deleted!');
+                      onCloseDialog()
+                    })
+                    .catch((error) => {
+                      console.error('Error removing document: ', error);
+                      onCloseDialog();
+                    });
+                }}
+                ml={3}
+              >
                 Delete
               </Button>
             </AlertDialogFooter>

@@ -26,7 +26,7 @@ const store = createStore({
     state.vaults = [];
   }),
 
-  deleteVault: computed((state, id) => {
+  deleteVault: action((state, id) => {
     state.vaults = state.vaults.filter((vault) => vault.vid !== id);
   }),
 
