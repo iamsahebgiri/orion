@@ -6,13 +6,13 @@ const VaultDetailsSkeleton = () => {
       {/* top bar */}
       <Flex justifyContent="space-between">
         <Flex>
-          <SkeletonCircle size="8" mr="4" />
-          <Skeleton width="32" rounded="md" height="8" />
+          <SkeletonCircle size="10" mr="4" />
+          <Skeleton width="32" rounded="md" height="10" />
         </Flex>
 
         <Flex>
-          <Skeleton width="24" rounded="md" height="8" />
-          <Skeleton width="24" rounded="md" ml="4" height="8" />
+          <Skeleton width="24" rounded="md" height="10" />
+          <Skeleton width="24" rounded="md" ml="4" height="10" />
         </Flex>
       </Flex>
 

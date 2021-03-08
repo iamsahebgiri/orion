@@ -19,6 +19,7 @@ import {
 } from '@chakra-ui/react';
 import { useStoreActions } from 'easy-peasy';
 import React, { useEffect, useState } from 'react';
+import { useRouter } from "next/router";
 import {
   HiGlobeAlt,
   HiInformationCircle,
@@ -70,7 +71,8 @@ const VaultDetails = ({ vault }) => {
   const deleteVault = useStoreActions((action) => action.deleteVault);
 
   const toast = useToast();
-
+  const router = useRouter();
+  const [deleting, setDeleting] = useState(false);
   return (
     <>
       <Flex width="100%" minH="100vh" px={12} py={4} direction="column">
@@ -159,6 +161,7 @@ const VaultDetails = ({ vault }) => {
               <Button
                 colorScheme="red"
                 onClick={() => {
+                  setDeleting(true);
                   deleteVaultById(vid)
                     .then(() => {
                       deleteVault(vid);
@@ -167,8 +170,10 @@ const VaultDetails = ({ vault }) => {
                         status: 'success',
                         duration: 2000
                       });
+                      setDeleting(false);
                       console.log('Document successfully deleted!');
-                      onCloseDialog()
+                      onCloseDialog();
+                      router.replace("/vaults");
                     })
                     .catch((error) => {
                       console.error('Error removing document: ', error);
@@ -176,6 +181,7 @@ const VaultDetails = ({ vault }) => {
                     });
                 }}
                 ml={3}
+                isLoading={deleting}
               >
                 Delete
               </Button>
