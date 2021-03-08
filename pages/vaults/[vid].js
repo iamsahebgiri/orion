@@ -1,10 +1,9 @@
-import { useEffect, useState } from 'react';
 import DashboardShell from '@/components/DashboardShell';
-import Vault from '@/components/Vault';
+import VaultDetailsSkeleton from '@/components/Skeleton/VaultDetailsSkeleton';
 import VaultDetails from '@/components/VaultDetails';
-import { useStoreActions } from 'easy-peasy';
-import { useRouter } from 'next/router';
 import { getVaultById } from '@/lib/db';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 
 const SingleVault = () => {
   const router = useRouter();
@@ -14,6 +13,7 @@ const SingleVault = () => {
 
   useEffect(() => {
     if (router?.query?.vid) {
+      setLoading(true);
       getVaultById(router?.query?.vid)
         .then((doc) => {
           setVault(doc.data());
@@ -25,9 +25,10 @@ const SingleVault = () => {
         });
     }
   }, [router]);
+
   return (
     <DashboardShell>
-      {!loading && <VaultDetails vault={vault} />}
+      {loading ? <VaultDetailsSkeleton /> : <VaultDetails vault={vault} />}
     </DashboardShell>
   );
 };

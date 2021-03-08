@@ -2,12 +2,14 @@ import { ChakraProvider } from '@chakra-ui/react';
 import { Global, css } from '@emotion/react';
 import Head from 'next/head';
 
+import { StoreProvider } from 'easy-peasy';
+import store from '@/store/store';
+
 import customTheme from '@/styles/theme';
-import '@/styles/scroll.css';
 import { AuthProvider } from '@/lib/auth';
 
-import { StoreProvider } from "easy-peasy";
-import store from '@/store/store';
+import '@/styles/scroll.css';
+import '@/styles/anim.css';
 
 const GlobalStyle = ({ children }) => {
   return (

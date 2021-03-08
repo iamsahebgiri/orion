@@ -1,7 +1,5 @@
-import Link from 'next/link';
-import Head from 'next/head';
-import { useRouter } from 'next/router';
-
+import Container from '@/components/Container';
+import { useAuth } from '@/lib/auth';
 import {
   Button,
   Flex,
@@ -10,9 +8,9 @@ import {
   Stack,
   Text
 } from '@chakra-ui/react';
-import Container from '@/components/Container';
-import { useAuth } from '@/lib/auth';
-
+import Head from 'next/head';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 const Home = () => {
   const router = useRouter();
@@ -39,7 +37,11 @@ const Home = () => {
         </Flex>
 
         <Flex direction="column" alignItems="center" mt={16} py={16}>
-          <Heading color="gray.800" textAlign="center">
+          <Heading
+            color="gray.800"
+            className="gradient-shift"
+            textAlign="center"
+          >
             Never forget your password again.
           </Heading>
           <Text mt={3} color="gray.600" textAlign="center">

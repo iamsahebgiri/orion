@@ -1,30 +1,27 @@
+import { useAuth } from '@/lib/auth';
+import { createVault } from '@/lib/db';
 import {
+  Box,
+  Button,
   Drawer,
   DrawerBody,
+  DrawerCloseButton,
+  DrawerContent,
   DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
-  DrawerContent,
-  DrawerCloseButton,
-  useDisclosure,
-  FormLabel,
   FormControl,
   FormErrorMessage,
-  InputLeftAddon,
-  InputRightAddon,
-  Select,
-  Textarea,
-  IconButton,
-  Stack,
-  Box,
+  FormLabel,
   Input,
   InputGroup,
-  Button
+  InputLeftAddon,
+  InputRightAddon,
+  Stack,
+  Textarea
 } from '@chakra-ui/react';
-import { useForm } from 'react-hook-form';
-import { useAuth } from '@/lib/auth';
-import { createVault } from '@/lib/db';
 import { useStoreActions } from 'easy-peasy';
+import { useForm } from 'react-hook-form';
 
 const AddItemDrawer = ({ isOpen, onClose }) => {
   const { user, loading } = useAuth();
