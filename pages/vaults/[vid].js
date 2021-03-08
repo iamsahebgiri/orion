@@ -17,10 +17,11 @@ const SingleVault = () => {
       getVaultById(router?.query?.vid)
         .then((doc) => {
           setVault(doc.data());
-          setLoading(false);
         })
         .catch((error) => {
           console.log('Error getting documents: ', error);
+        })
+        .finally(() => {
           setLoading(false);
         });
     }

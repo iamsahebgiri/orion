@@ -19,13 +19,13 @@ Orion puts your digital life at your fingertips, simply and securely.
 * [x] Create Vaults
 * [x] Search Vaults
 * [x] View Vaults
-* [ ] Edit Vaults
+* [x] Edit Vaults
 * [x] Delete Vaults
 * [x] Add global state management - easy-peasy
 * [x] Add loading state
 * [ ] Use localstorage to conditionally render banner
 * [ ] Encrypt Password and other sensitive informations
-* [ ] Add toast on successful events
+* [x] Add toast on successful events
 * [x] Copy text to clipboard
 * [ ] Design landing page
 * [ ] Add Team info and other info

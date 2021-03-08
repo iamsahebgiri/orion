@@ -26,22 +26,30 @@ const store = createStore({
     state.vaults = [];
   }),
 
-  deleteVault: action((state, id) => {
-    state.vaults = state.vaults.filter((vault) => vault.vid !== id);
+  updateVault: action((state, payload) => {
+    const index = state.vaults.findIndex((vault) => vault.vid === payload.vid);
+    state.vaults[index] = payload;
+  }),
+
+  deleteVault: action((state, vid) => {
+    state.vaults = state.vaults.filter((vault) => vault.vid !== vid);
   }),
 
   getAllVaults: thunk(async (actions, userId) => {
     actions.flushVaults();
+    actions.setLoadingVault(true);
     getVaultByUserId(userId)
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
           actions.addVault(doc.data());
           actions.addVaultCopy(doc.data());
         });
-        actions.setLoadingVault(false);
       })
       .catch((error) => {
         console.log('Error getting documents: ', error);
+      })
+      .finally(() => {
+        actions.setLoadingVault(false);
       });
   })
 });

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useAuth } from '@/lib/auth';
 import { createVault } from '@/lib/db';
 import {
@@ -17,15 +18,19 @@ import {
   InputGroup,
   InputLeftAddon,
   InputRightAddon,
+  InputRightElement,
+
   Stack,
   Textarea
 } from '@chakra-ui/react';
 import { useStoreActions } from 'easy-peasy';
 import { useForm } from 'react-hook-form';
 
-const AddItemDrawer = ({ isOpen, onClose }) => {
+const AddVaultDrawer = ({ isOpen, onClose }) => {
   const { user, loading } = useAuth();
   const { register, handleSubmit, errors, formState } = useForm();
+  const [show, setShow] = useState(false);
+  const handleClick = () => setShow(!show);
   const addVault = useStoreActions((action) => action.addVault);
   const onSubmit = (data) => {
     const vault = {
@@ -43,7 +48,7 @@ const AddItemDrawer = ({ isOpen, onClose }) => {
   };
 
   return (
-    <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
+    <Drawer isOpen={isOpen} placement="right" size="sm" onClose={onClose}>
       <DrawerOverlay>
         <form onSubmit={handleSubmit(onSubmit)}>
           <DrawerContent>
@@ -66,14 +71,23 @@ const AddItemDrawer = ({ isOpen, onClose }) => {
                 </Box>
 
                 <Box>
-                  <FormControl isInvalid={errors.password} isRequired>
+                <FormControl isInvalid={errors.password} isRequired>
                     <FormLabel htmlFor="password">Password</FormLabel>
-                    <Input
-                      name="password"
-                      placeholder="Eg. pass123"
-                      type="password"
-                      ref={register({ required: true })}
-                    />
+                    <InputGroup size="md">
+                      <Input
+                        pr="4.5rem"
+                        name="password"
+                        placeholder="Eg. pass123"
+                        type={show ? 'text' : 'password'}
+                        ref={register({ required: true })}
+                      />
+                      <InputRightElement width="4.5rem">
+                        <Button h="1.75rem" size="sm" onClick={handleClick}>
+                          {show ? 'Hide' : 'Show'}
+                        </Button>
+                      </InputRightElement>
+                    </InputGroup>
+
                     <FormErrorMessage>
                       {errors.password && errors.password.message}
                     </FormErrorMessage>
@@ -130,4 +144,4 @@ const AddItemDrawer = ({ isOpen, onClose }) => {
   );
 };
 
-export default AddItemDrawer;
+export default AddVaultDrawer;

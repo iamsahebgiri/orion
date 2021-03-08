@@ -15,7 +15,8 @@ import {
   Text,
   Tooltip,
   useClipboard,
-  useToast
+  useToast,
+  useDisclosure
 } from '@chakra-ui/react';
 import { useStoreActions } from 'easy-peasy';
 import React, { useEffect, useState } from 'react';
@@ -28,6 +29,7 @@ import {
   HiOutlineTrash,
   HiUserCircle
 } from 'react-icons/hi';
+import UpdateVaultDrawer from './UpdateVaultDrawer';
 
 const InfoItem = ({ content, icon }) => {
   const { hasCopied, onCopy } = useClipboard(content);
@@ -67,6 +69,7 @@ const VaultDetails = ({ vault }) => {
   const { note, password, url, username, vid } = vault;
   const [isOpenDialog, setIsOpenDialog] = useState(false);
   const onCloseDialog = () => setIsOpenDialog(false);
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const deleteVault = useStoreActions((action) => action.deleteVault);
 
@@ -99,7 +102,7 @@ const VaultDetails = ({ vault }) => {
             </Box>
           </Flex>
           <Box>
-            <Button leftIcon={<HiOutlinePencil />}>Edit</Button>
+            <Button leftIcon={<HiOutlinePencil />} onClick={onOpen}>Edit</Button>
             <Button
               leftIcon={<HiOutlineTrash />}
               ml={5}
@@ -189,6 +192,10 @@ const VaultDetails = ({ vault }) => {
           </AlertDialogContent>
         </AlertDialogOverlay>
       </AlertDialog>
+
+      {/* Edit Dialog */}
+      <UpdateVaultDrawer isOpen={isOpen} onClose={onClose} vault={vault} />
+
     </>
   );
 };

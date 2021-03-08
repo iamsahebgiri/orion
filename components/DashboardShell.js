@@ -14,7 +14,7 @@ import {
 } from '@chakra-ui/react';
 import React from 'react';
 import { HiOutlinePlus } from 'react-icons/hi';
-import AddItemDrawer from './AddItemDrawer';
+import AddVaultDrawer from './AddVaultDrawer';
 import AllVaults from './AllVaults';
 
 const DashboardShell = (props) => {
@@ -91,7 +91,7 @@ const DashboardShell = (props) => {
       </Flex>
 
       {/* Add Item Drawer */}
-      <AddItemDrawer isOpen={isOpen} onClose={onClose} />
+      <AddVaultDrawer isOpen={isOpen} onClose={onClose} />
     </Box>
   );
 };
