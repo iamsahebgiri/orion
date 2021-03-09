@@ -38,8 +38,7 @@ const Home = () => {
 
         <Flex direction="column" alignItems="center" mt={16} py={16}>
           <Heading
-            color="gray.800"
-            className="gradient-shift"
+            color="gray.700"
             textAlign="center"
           >
             Never forget your password again.
@@ -57,7 +56,15 @@ const Home = () => {
             Continue with Google
           </Button>
         </Flex>
-        <Flex alignItems="center" justifyContent="center"></Flex>
+        <Flex alignItems="center" justifyContent="center">
+          <img src="/assets/device-hero-desktop.png" />
+        </Flex>
+
+        <Flex>
+          <Flex h={8} w={8} bg="red" rounded="full">
+
+          </Flex>
+        </Flex>
       </Container>
     </>
   );

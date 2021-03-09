@@ -11,16 +11,22 @@ import {
   Flex,
   Icon,
   SimpleGrid,
+  FormControl,
+  FormLabel,
+  InputGroup,
+  InputRightElement,
+  Input,
   Stack,
   Text,
   Tooltip,
   useClipboard,
   useToast,
-  useDisclosure
+  useDisclosure,
+  Heading
 } from '@chakra-ui/react';
 import { useStoreActions } from 'easy-peasy';
 import React, { useEffect, useState } from 'react';
-import { useRouter } from "next/router";
+import { useRouter } from 'next/router';
 import {
   HiGlobeAlt,
   HiInformationCircle,
@@ -30,8 +36,12 @@ import {
   HiUserCircle
 } from 'react-icons/hi';
 import UpdateVaultDrawer from './UpdateVaultDrawer';
+import getStrengthColor from "@/utils/getStrengthColor";
 
-const InfoItem = ({ content, icon }) => {
+const MyInputGroup = ({ content, label }) => {
+  const [show, setShow] = React.useState(false);
+  const handleClick = () => setShow(!show);
+
   const { hasCopied, onCopy } = useClipboard(content);
   const toast = useToast();
 
@@ -48,22 +58,73 @@ const InfoItem = ({ content, icon }) => {
   }, [hasCopied]);
 
   return (
-    <Box>
-      <Flex alignItems="center">
-        <Icon as={icon} mr={2} h={5} w={5} color="gray.600" />
-        <Tooltip label="Copy to clipboard" hasArrow>
-          <Text
-            color="gray.700"
-            _hover={{ color: 'gray.700', cursor: 'pointer' }}
-            onClick={onCopy}
-          >
-            {content}
-          </Text>
-        </Tooltip>
-      </Flex>
-    </Box>
+    <FormControl id={content}>
+      <FormLabel>{label}</FormLabel>
+      <InputGroup size="md">
+        <Input
+          pr="4.5rem"
+          type="text"
+          value={content}
+          bgColor="white"
+          focusBorderColor="messenger.500"
+        />
+        <InputRightElement width="4.5rem">
+          <Tooltip label="Copy to clipboard" hasArrow>
+            <Button h="1.75rem" size="sm" onClick={onCopy}>
+              {hasCopied ? 'Copied' : 'Copy'}
+            </Button>
+          </Tooltip>
+        </InputRightElement>
+      </InputGroup>
+    </FormControl>
   );
 };
+
+const MyPasswordInput = ({ content, label }) => {
+  const [show, setShow] = React.useState(false);
+  const handleClick = () => setShow(!show);
+
+  const { hasCopied, onCopy } = useClipboard(content);
+  const toast = useToast();
+
+  useEffect(() => {
+    if (hasCopied) {
+      toast({
+        title: 'Successfully copied!',
+        description: `${content} copied to your clipboard`,
+        status: 'success',
+        duration: 2000,
+        isClosable: true
+      });
+    }
+  }, [hasCopied]);
+
+  return (
+    <FormControl id={content}>
+      <FormLabel>{label}</FormLabel>
+      <InputGroup size="md">
+        <Input
+          pr="9rem"
+          type={show ? 'text' : 'password'}
+          value={content}
+          bgColor="white"
+          focusBorderColor="messenger.500"
+        />
+        <InputRightElement width="9rem">
+          <Button h="1.75rem" size="sm" onClick={handleClick}>
+            {show ? 'Hide' : 'Show'}
+          </Button>
+          <Tooltip label="Copy to clipboard" hasArrow>
+            <Button h="1.75rem" size="sm" ml="0.5rem" onClick={onCopy}>
+              {hasCopied ? 'Copied' : 'Copy'}
+            </Button>
+          </Tooltip>
+        </InputRightElement>
+      </InputGroup>
+    </FormControl>
+  );
+};
+
 
 const VaultDetails = ({ vault }) => {
   const { note, password, url, username, vid } = vault;
@@ -102,7 +163,9 @@ const VaultDetails = ({ vault }) => {
             </Box>
           </Flex>
           <Box>
-            <Button leftIcon={<HiOutlinePencil />} onClick={onOpen}>Edit</Button>
+            <Button leftIcon={<HiOutlinePencil />} onClick={onOpen}>
+              Edit
+            </Button>
             <Button
               leftIcon={<HiOutlineTrash />}
               ml={5}
@@ -114,7 +177,7 @@ const VaultDetails = ({ vault }) => {
           </Box>
         </Flex>
 
-        <Flex bg="messenger.50" mt={8} p={4} rounded="md" alignItems="center">
+        {/* <Flex bg="messenger.50" mt={8} p={4} rounded="md" alignItems="center">
           <Icon
             as={HiInformationCircle}
             h={5}
@@ -125,20 +188,28 @@ const VaultDetails = ({ vault }) => {
           <Text color="messenger.600">
             Click on the item to copy it to clipboard.
           </Text>
-        </Flex>
+        </Flex> */}
         <SimpleGrid mt={8} columns={[1, 1, 2]} spacing="40px">
           <Stack p={8} spacing={5} bg="gray.100" rounded="md">
-            <Text fontWeight="bold" color="gray.800">
-              Vault information
-            </Text>
-            <InfoItem label="Username" content={username} icon={HiUserCircle} />
-            <InfoItem label="Password" content={password} icon={HiKey} />
-            <InfoItem
-              label="Website"
-              content={`https://${url}.com`}
-              icon={HiGlobeAlt}
-            />
+            <Box>
+              <Heading size="md" color="gray.800">
+                Vault information
+              </Heading>
+              <Text color="gray.500">created 2 days ago</Text>
+            </Box>
+
+            <MyInputGroup content={username} label="Username" />
+
+            <MyPasswordInput content={password} label="Password" />
+
+            <FormControl id="email">
+              <FormLabel>Strength</FormLabel>
+              <Flex height="2" bg={getStrengthColor(password)} rounded="full"></Flex>
+            </FormControl>
+
+            <MyInputGroup content={`https://${url}.com`} label="Website" />
           </Stack>
+
           <Box p={8} bg="gray.100" rounded="md">
             <Text fontWeight="bold" color="gray.800">
               Note
@@ -176,7 +247,7 @@ const VaultDetails = ({ vault }) => {
                       setDeleting(false);
                       console.log('Document successfully deleted!');
                       onCloseDialog();
-                      router.replace("/vaults");
+                      router.replace('/vaults');
                     })
                     .catch((error) => {
                       console.error('Error removing document: ', error);
@@ -195,7 +266,6 @@ const VaultDetails = ({ vault }) => {
 
       {/* Edit Dialog */}
       <UpdateVaultDrawer isOpen={isOpen} onClose={onClose} vault={vault} />
-
     </>
   );
 };
