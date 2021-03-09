@@ -35,8 +35,10 @@ import {
   HiOutlineTrash,
   HiUserCircle
 } from 'react-icons/hi';
+import{ formatDistance, parse, parseISO} from "date-fns";
 import UpdateVaultDrawer from './UpdateVaultDrawer';
 import getStrengthColor from "@/utils/getStrengthColor";
+
 
 const MyInputGroup = ({ content, label }) => {
   const [show, setShow] = React.useState(false);
@@ -65,6 +67,7 @@ const MyInputGroup = ({ content, label }) => {
           pr="4.5rem"
           type="text"
           value={content}
+          isReadOnly
           bgColor="white"
           focusBorderColor="messenger.500"
         />
@@ -107,6 +110,7 @@ const MyPasswordInput = ({ content, label }) => {
           pr="9rem"
           type={show ? 'text' : 'password'}
           value={content}
+          isReadOnly
           bgColor="white"
           focusBorderColor="messenger.500"
         />
@@ -127,7 +131,7 @@ const MyPasswordInput = ({ content, label }) => {
 
 
 const VaultDetails = ({ vault }) => {
-  const { note, password, url, username, vid } = vault;
+  const { note, password, url, username, vid, createdAt } = vault;
   const [isOpenDialog, setIsOpenDialog] = useState(false);
   const onCloseDialog = () => setIsOpenDialog(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -195,7 +199,7 @@ const VaultDetails = ({ vault }) => {
               <Heading size="md" color="gray.800">
                 Vault information
               </Heading>
-              <Text color="gray.500">created 2 days ago</Text>
+              <Text color="gray.500">created {formatDistance(new Date(), parseISO(createdAt), { addSuffix: true })}</Text>
             </Box>
 
             <MyInputGroup content={username} label="Username" />

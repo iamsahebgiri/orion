@@ -23,7 +23,6 @@ Orion puts your digital life at your fingertips, simply and securely.
 * [x] Delete Vaults
 * [x] Add global state management - easy-peasy
 * [x] Add loading state
-* [ ] Use localstorage to conditionally render banner
 * [ ] Encrypt Password and other sensitive informations
 * [x] Add toast on successful events
 * [x] Copy text to clipboard

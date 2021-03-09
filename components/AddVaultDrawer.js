@@ -25,6 +25,7 @@ import {
 } from '@chakra-ui/react';
 import { useStoreActions } from 'easy-peasy';
 import { useForm } from 'react-hook-form';
+import CryptoJS from "crypto-js";
 
 const AddVaultDrawer = ({ isOpen, onClose }) => {
   const { user, loading } = useAuth();
@@ -45,6 +46,12 @@ const AddVaultDrawer = ({ isOpen, onClose }) => {
       resolve();
       onClose();
     });
+
+    // console.log(aes.encrypt("saheb", "password123").toString());
+    // U2FsdGVkX1/VxmM9CpWokYE0uLrRx2/eQLx6tDVCHsg=
+    // console.log(CryptoJS.AES.decrypt("U2FsdGVkX1/VxmM9CpWokYE0uLrRx2/eQLx6tDVCHsg=", "passaword123").toString(CryptoJS.enc.Utf8));
+
+
   };
 
   return (
