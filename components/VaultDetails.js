@@ -1,4 +1,5 @@
 import { deleteVaultById } from '@/lib/db';
+import getStrengthColor from '@/utils/getStrengthColor';
 import {
   AlertDialog,
   AlertDialogBody,
@@ -9,36 +10,26 @@ import {
   Box,
   Button,
   Flex,
-  Icon,
-  SimpleGrid,
   FormControl,
   FormLabel,
+  Heading,
+  Input,
   InputGroup,
   InputRightElement,
-  Input,
+  SimpleGrid,
   Stack,
   Text,
   Tooltip,
   useClipboard,
-  useToast,
   useDisclosure,
-  Heading
+  useToast
 } from '@chakra-ui/react';
+import { formatDistance, parseISO } from 'date-fns';
 import { useStoreActions } from 'easy-peasy';
-import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import {
-  HiGlobeAlt,
-  HiInformationCircle,
-  HiKey,
-  HiOutlinePencil,
-  HiOutlineTrash,
-  HiUserCircle
-} from 'react-icons/hi';
-import{ formatDistance, parse, parseISO} from "date-fns";
+import React, { useEffect, useState } from 'react';
+import { HiOutlinePencil, HiOutlineTrash } from 'react-icons/hi';
 import UpdateVaultDrawer from './UpdateVaultDrawer';
-import getStrengthColor from "@/utils/getStrengthColor";
-
 
 const MyInputGroup = ({ content, label }) => {
   const [show, setShow] = React.useState(false);
@@ -129,7 +120,6 @@ const MyPasswordInput = ({ content, label }) => {
   );
 };
 
-
 const VaultDetails = ({ vault }) => {
   const { note, password, url, username, vid, createdAt } = vault;
   const [isOpenDialog, setIsOpenDialog] = useState(false);
@@ -199,7 +189,12 @@ const VaultDetails = ({ vault }) => {
               <Heading size="md" color="gray.800">
                 Vault information
               </Heading>
-              <Text color="gray.500">created {formatDistance(new Date(), parseISO(createdAt), { addSuffix: true })}</Text>
+              <Text color="gray.500">
+                created{' '}
+                {formatDistance(new Date(), parseISO(createdAt), {
+                  addSuffix: true
+                })}
+              </Text>
             </Box>
 
             <MyInputGroup content={username} label="Username" />
@@ -208,7 +203,11 @@ const VaultDetails = ({ vault }) => {
 
             <FormControl id="email">
               <FormLabel>Strength</FormLabel>
-              <Flex height="2" bg={getStrengthColor(password)} rounded="full"></Flex>
+              <Flex
+                height="2"
+                bg={getStrengthColor(password)}
+                rounded="full"
+              ></Flex>
             </FormControl>
 
             <MyInputGroup content={`https://${url}.com`} label="Website" />
