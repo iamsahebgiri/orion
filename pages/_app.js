@@ -16,6 +16,12 @@ const GlobalStyle = ({ children }) => {
     <>
       <Head>
         <meta content="width=device-width, initial-scale=1" name="viewport" />
+        <title>Orion</title>
+        <link
+          rel="shortcut icon"
+          type="image/png"
+          href="./assets/orion-sm.png"
+        />
       </Head>
       <Global
         styles={css`

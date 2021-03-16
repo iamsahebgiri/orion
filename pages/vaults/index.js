@@ -1,6 +1,5 @@
 import DashboardShell from '@/components/DashboardShell';
-import VaultDetails from '@/components/VaultDetails';
-import { Box, Flex, Heading, Icon, Text } from '@chakra-ui/react';
+import { Flex, Heading, Icon, Text } from '@chakra-ui/react';
 import { HiFingerPrint } from 'react-icons/hi';
 
 const Vaults = () => {
