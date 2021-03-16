@@ -60,7 +60,6 @@ const MyInputGroup = ({ content, label }) => {
           value={content}
           isReadOnly
           bgColor="white"
-          focusBorderColor="messenger.500"
         />
         <InputRightElement width="4.5rem">
           <Tooltip label="Copy to clipboard" hasArrow>
@@ -103,7 +102,6 @@ const MyPasswordInput = ({ content, label }) => {
           value={content}
           isReadOnly
           bgColor="white"
-          focusBorderColor="messenger.500"
         />
         <InputRightElement width="9rem">
           <Button h="1.75rem" size="sm" onClick={handleClick}>

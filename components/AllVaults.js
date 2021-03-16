@@ -60,7 +60,6 @@ const AllVaults = () => {
             bg="white"
             width="320px"
             placeholder="Search vaults"
-            focusBorderColor="messenger.500"
             value={searchTerm}
             onChange={handleSearch}
           />
