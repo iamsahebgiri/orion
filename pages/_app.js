@@ -20,7 +20,7 @@ const GlobalStyle = ({ children }) => {
         <link
           rel="shortcut icon"
           type="image/png"
-          href="./assets/orion-sm.png"
+          href="/assets/orion-sm.png"
         />
       </Head>
       <Global
